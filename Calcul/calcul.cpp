@@ -92,11 +92,11 @@ ISCObject* Calcul::build(MemoryManager* memory) {
 
     String name = (pos < size()) ? tocken(pos++) : String();
 
-    ISCObjectList params;
+    ISCObjectList args;
     if (pos < size() && tocken(pos) == "(") {
         memory->createSubContexte();
         startSubCalc(pos);
-        params = resolve(memory);
+        args = resolve(memory);
         resolveAndClose(String());
         memory->closeContexte();
     }
@@ -105,7 +105,7 @@ ISCObject* Calcul::build(MemoryManager* memory) {
     for (int i = 0; i < pos; ++i) m_tokens.removeFirst();
 
     ISCObject* object = new ISCObject(TypeInfo(type, modifiers), name);
-    object->construct(memory->m_process, params);
+    object->construct(memory->m_process, args);
     m_tokens.prepend(object->name());
     return object;
 }

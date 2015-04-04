@@ -31,7 +31,7 @@ public:
     void createNewContexte(ISCObject *self);
     void createSubContexte();
     void closeContexte();
-    void initContexte(const StringList& tokens, const ISCObjectList& params);
+    void initContexte(const StringList& tokens, const ISCObjectList& args);
 
     void addEmptyElement(const ISCObject *element);
     void addStartElement(const ISCObject *element);

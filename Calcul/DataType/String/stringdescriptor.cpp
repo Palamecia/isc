@@ -5,7 +5,7 @@ StringDescriptor::StringDescriptor() : TypeDescriptor(string_key_word) {
     TypeDescriptor::BuiltIn[string_type] = this;
 }
 
-void StringDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance) {
+void StringDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
 
 }
 

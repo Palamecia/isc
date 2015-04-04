@@ -1,8 +1,8 @@
 #include "contexte.h"
 #include "Process/processmanager.h"
 
-Contexte::Contexte(ISCObject *thisObject) : m_parent(NULL) {
-    insert(new ISCObject(*thisObject, this_key_word));
+Contexte::Contexte(ISCObject *ctx_self) : m_parent(NULL) {
+    insert(new ISCObject(*ctx_self, this_key_word));
 }
 
 Contexte::Contexte(Contexte *parent) : m_parent(parent)
@@ -20,12 +20,12 @@ ISCObject *Contexte::get(const String& object, const String& member) {
     return get(object)->get(get(this_key_word), member);
 }
 
-ISCObject *Contexte::call(const String& member, const ISCObjectList& params) {
-    return get(this_key_word)->call(get(this_key_word), member, params);
+ISCObject *Contexte::call(const String& member, const ISCObjectList& args) {
+    return get(this_key_word)->call(get(this_key_word), member, args);
 }
 
-ISCObject* Contexte::call(const String& object, const String& member, const ISCObjectList& params) {
-    return get(object)->call(get(this_key_word), member, params);
+ISCObject* Contexte::call(const String& object, const String& member, const ISCObjectList& args) {
+    return get(object)->call(get(this_key_word), member, args);
 }
 
 bool Contexte::contains(ISCObject* obj) {

@@ -35,6 +35,7 @@ public:
 
 private:
     ISCSourceManager();
+    ~ISCSourceManager();
     static ISCSourceManager* m_instance;
 
     String m_appRootPath;
@@ -45,6 +46,8 @@ private:
 
     InterfaceMapping m_systemInterfaces;
     String m_defaultOutput;
+
+    void findInterfaces(String &path);
 };
 
 #endif // ISCSOURCEMANAGER_H

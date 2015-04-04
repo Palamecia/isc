@@ -9,7 +9,7 @@ public:
 
     virtual bool instanceOf(const TypeInfo& type);
     virtual ISCObject* get(ISCObject* requester, const String& member);
-    virtual ISCObject* call(ISCObject* requester, const String& member, const ISCObjectList& params);
+    virtual ISCObject* call(ISCObject* requester, const String& member, const ISCObjectList& args);
 
     String &toString();
 

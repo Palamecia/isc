@@ -14,7 +14,7 @@ public:
 
     TypeDescriptor* getType(const String& type);
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
 
     void declareParent(TypeDescriptor * parent);
     void declareType(TypeDescriptor * type);

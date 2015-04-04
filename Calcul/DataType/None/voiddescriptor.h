@@ -8,7 +8,7 @@ class VoidDescriptor : public TypeDescriptor {
 public:
     VoidDescriptor();
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
 
 private:
     static ISCObject* m_noneObject;

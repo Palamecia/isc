@@ -1,38 +1,43 @@
 #include "iscsourcemanager.h"
 #include "Calcul/DataType/SystemInterface/iscsi.h"
+#include <cstring>
 
 #ifdef _WIN32
+#define PATH_SEP        "\\"
+#define ISCSI_PATH      "\\iscsi"
 #define MODULE_SUFFIX   ".dll"
 #else
 #include <unistd.h>
 #include <dirent.h>
 #include <dlfcn.h>
+
+#define PATH_SEP        "/"
+#define ISCSI_PATH      "/iscsi"
 #define MODULE_SUFFIX   ".so"
 #endif
 
-#define MAX_BUFF    1024
-#define ISCSI_PATH  String("/iscsi")
+#define MAX_PATH    4096
 
 ISCSourceManager* ISCSourceManager::m_instance = NULL;
 
-ISCSourceManager::ISCSourceManager() :
-    m_defaultOutput("stdio") {
-    char buff[MAX_BUFF];
+ISCSourceManager::ISCSourceManager() : m_defaultOutput("stdio") {
+    char buff[MAX_PATH];
 #ifdef _WIN32
-    GetCurrentDirectory(MAX_BUFF, buff);
+    GetCurrentDirectory(MAX_PATH, buff);
     m_appRootPath = String(buff);
 #else
-    m_appRootPath = String(getcwd(buff, MAX_BUFF));
+    m_appRootPath = String(getcwd(buff, MAX_PATH));
 #endif
-    m_iscRootPath = String(".");
+}
 
-    StringList interfaces = listFiles(m_appRootPath+ISCSI_PATH);
-    for (uint i = 0; i < interfaces.size(); ++i) {
-        Interface iscsi;
-        iscsi.path = &m_appRootPath;
-        iscsi.file = ISCSI_PATH + "/" + interfaces[i];
-        iscsi.handle = NULL;
-        m_systemInterfaces.insert(InterfaceMapping::value_type(interfaces[i].replace(MODULE_SUFFIX, ""), iscsi));
+ISCSourceManager::~ISCSourceManager() {
+    InterfaceMapping::iterator it;
+    for (it = m_systemInterfaces.begin(); it != m_systemInterfaces.end(); ++it) {
+#ifdef _WIN32
+
+#else
+        dlclose(it->second.handle);
+#endif
     }
 }
 
@@ -41,7 +46,24 @@ void ISCSourceManager::init(int argc, char** argv) {
     if (m_instance) return;
     m_instance = new ISCSourceManager;
 
-    for (int argn = 0; argn < argc; ++argn) {
+    char buff[MAX_PATH];
+#ifdef _WIN32
+
+#else
+    size_t len = readlink(argv[0], buff, MAX_PATH);
+    if (len < MAX_PATH) buff[len] = 0;
+    else {
+        strncpy(buff, argv[0], MAX_PATH);
+        buff[MAX_PATH-1];
+    }
+#endif
+    StringList iscRootPath = String(buff).split(PATH_SEP);
+    iscRootPath.pop_back();
+    m_instance->m_iscRootPath = iscRootPath.join(PATH_SEP);
+
+    bool entryPointFound = false;
+
+    for (int argn = 1; argn < argc; ++argn) {
         switch (argv[argn][0]) {
         case '-':
             switch (argv[argn][1]) {
@@ -50,9 +72,22 @@ void ISCSourceManager::init(int argc, char** argv) {
                 break;
             }
         default:
-            m_instance->m_entryModule = String(argv[argn]);
+            if (!entryPointFound) {
+                StringList sourcePath = String(argv[argn]).split(PATH_SEP);
+                while (sourcePath.size() > 1) {
+                    m_instance->m_appRootPath += PATH_SEP + sourcePath.first();
+                    sourcePath.removeAt(0);
+                }
+                m_instance->m_entryModule = sourcePath.first().replace(".is", "");
+                entryPointFound = true;
+            } else {
+                m_instance->m_args.append(argv[argn]);
+            }
         }
     }
+
+    m_instance->findInterfaces(m_instance->m_appRootPath);
+    m_instance->findInterfaces(m_instance->m_iscRootPath);
 }
 
 ISCSourceManager *ISCSourceManager::instance() {
@@ -78,12 +113,8 @@ StringList ISCSourceManager::moduleNames(const StringList& patern) {
 }
 
 String ISCSourceManager::modulePath(String module) {
-    return m_appRootPath + "/" + module.replace(".", "/") + ".is";
+    return m_appRootPath + PATH_SEP + module.replace(".", PATH_SEP) + ".is";
 }
-
-/*File ISCSourceManager::openModuleFile(String module) {
-
-}*/
 
 StringList ISCSourceManager::listInterfaces() {
     StringList interfaces;
@@ -104,10 +135,9 @@ ISCSI* ISCSourceManager::loadInterface(const String &name) {
 
 #else
         interface.handle = dlopen(String(*interface.path + interface.file).c_str(), RTLD_LAZY);
+        // dlerror();
 #endif
     }
-
-    // dlerror();
 
     ISCSIBuilder iscsi_new =
 #ifdef _WIN32
@@ -117,6 +147,17 @@ ISCSI* ISCSourceManager::loadInterface(const String &name) {
 #endif
 
     return (*iscsi_new)();
+}
+
+void ISCSourceManager::findInterfaces(String &path) {
+    StringList interfaces = listFiles(path+ISCSI_PATH);
+    for (uint i = 0; i < interfaces.size(); ++i) {
+        Interface iscsi;
+        iscsi.path = &path;
+        iscsi.file = ISCSI_PATH PATH_SEP + interfaces[i];
+        iscsi.handle = NULL;
+        m_systemInterfaces.insert(InterfaceMapping::value_type(interfaces[i].replace(MODULE_SUFFIX, ""), iscsi));
+    }
 }
 
 StringList ISCSourceManager::listFiles(const String &path) {

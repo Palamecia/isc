@@ -11,7 +11,7 @@ ISCObject* StringValue::get(ISCObject* requester, const String& member) {
     return NULL;
 }
 
-ISCObject* StringValue::call(ISCObject* requester, const String& member, const ISCObjectList& params) {
+ISCObject* StringValue::call(ISCObject* requester, const String& member, const ISCObjectList& args) {
 
 }
 

@@ -36,11 +36,11 @@ void ProcessManager::exec() {
     }
 }
 
-ISCObject *ProcessManager::call(Module* module, pos_t pos, ISCObject *self, const ISCObjectList& params) {
+ISCObject *ProcessManager::call(Module* module, pos_t pos, ISCObject *self, const ISCObjectList& args) {
     m_stepManager.call(module, pos);
     m_memory.createNewContexte(self);
     Step* header = m_stepManager.nextStep();
-    m_memory.initContexte(header->tokens(), params);
+    m_memory.initContexte(header->tokens(), args);
     exec();
     m_memory.closeContexte();
     return m_return;

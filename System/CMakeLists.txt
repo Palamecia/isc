@@ -1,10 +1,12 @@
 project(System)
 
 set(${PROJECT_NAME}_HDR
+    errormanager.h
     iscsourcemanager.h
 )
 
 set(${PROJECT_NAME}_SRC
+    errormanager.cpp
     iscsourcemanager.cpp
 )
 

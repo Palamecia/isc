@@ -5,7 +5,7 @@
 
 class BuiltinFunction : public FunctionValue {
 public:
-    typedef ISCObject* (*Code)(ISCObject* self, const ISCObjectList& params);
+    typedef ISCObject* (*Code)(ISCObject* self, const ISCObjectList& args);
     struct Shape {
         Shape(byte pc, TypeInfo ** pt, Code code) : pc(pc), pt(pt), code(code) {}
         byte pc;
@@ -16,7 +16,7 @@ public:
     BuiltinFunction();
     virtual ~BuiltinFunction();
 
-    ISCObject* run(ISCObject* self, const ISCObjectList& params);
+    ISCObject* run(ISCObject* self, const ISCObjectList& args);
 
 protected:
     List<Shape> m_shapes;
@@ -31,10 +31,10 @@ protected:
 #define unary_operator(name, rvalue_t) \
     ISCObject* name##_##rvalue_t(ISCObject* self, const ISCObjectList&)
 #define binary_operator(name, lvalue_t, rvalue_t) \
-    ISCObject* name##_##lvalue_t##_##rvalue_t(ISCObject* self, const ISCObjectList& params)
-#define bind_shape_0(code) \
+    ISCObject* name##_##lvalue_t##_##rvalue_t(ISCObject* self, const ISCObjectList& args)
+#define bind_unary_shape(code) \
     m_shapes.append(BuiltinFunction::Shape(0, NULL, &code))
-#define bind_shape_1(type, code) \
+#define bind_binary_shape(type, code) \
     TypeInfo** pt_##type = new TypeInfo*[1]; \
     pt_##type[0] = new TypeInfo(type); \
     m_shapes.append(BuiltinFunction::Shape(1, pt_##type, &code))

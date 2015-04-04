@@ -14,7 +14,7 @@ public:
     void setDefaultOutput(const String &output);
 
     void exec();
-    ISCObject* call(Module *module, pos_t pos, ISCObject* self, const ISCObjectList& params);
+    ISCObject* call(Module *module, pos_t pos, ISCObject* self, const ISCObjectList& args);
 
     int checkExec();
 

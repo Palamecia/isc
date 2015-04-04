@@ -7,7 +7,8 @@ class BuiltinValue : public ISCValue {
 public:
     BuiltinValue();
 
-    virtual ISCObject* call(ISCObject* requester, ISCObject* self, const String& member, const ISCObjectList& params);
+    virtual ISCObject* get(ISCObject *requester, const String &member);
+    virtual ISCObject* call(ISCObject* requester, ISCObject* self, const String& member, const ISCObjectList& args);
     void setFunctionMapping(ISCObjectMapping* mapping);
 
 protected:

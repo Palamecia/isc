@@ -28,12 +28,12 @@ public:
     ISCObject(const TypeInfo& type = TypeDescriptor::BuiltIn[var_type], const String& name = String());
     ISCObject(const ISCObject& other, const String& name = String());
 
-    void construct(ProcessManager* process, const ISCObjectList& params = ISCObjectList());
+    void construct(ProcessManager* process, const ISCObjectList& args = ISCObjectList());
 
     bool instanceOf(const TypeInfo& type);
     bool inheritFrom(const TypeInfo& type);
     ISCObject* get(ISCObject* requester, const String& member);
-    ISCObject* call(ISCObject* requester, const String& member, const ISCObjectList& params);
+    ISCObject* call(ISCObject* requester, const String& member, const ISCObjectList& args);
 
     String &name();
     ValuePtr value();

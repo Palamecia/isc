@@ -22,7 +22,7 @@ IntegerDescriptor::IntegerDescriptor() : TypeDescriptor(int_key_word) {
     bind_operator(m_fcts, int_or_operator, logical_or_operator);
 }
 
-void IntegerDescriptor::createInstance(ProcessManager*, const List<ISCObject*>& params, byte accesMask, ISCObject* instance) {
+void IntegerDescriptor::createInstance(ProcessManager*, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
     IntegerValue* value = new IntegerValue;
     value->setFunctionMapping(m_fcts);
     instance->init(value, accesMask);

@@ -19,9 +19,9 @@ TypeInfo::TypeInfo(TypeDescriptor *descriptor, ModifierList modifiers)
       m_modifiers(modifiers)
 {}
 
-void TypeInfo::createInstance(ProcessManager* process, const List<ISCObject*>& params, byte& accesMask, ISCObject* instance) {
+void TypeInfo::createInstance(ProcessManager* process, const List<ISCObject*>& args, byte& accesMask, ISCObject* instance) {
     if (m_modifiers.isEmpty()) {
-        m_descriptor->createInstance(process, params, accesMask, instance);
+        m_descriptor->createInstance(process, args, accesMask, instance);
     } else {
         ModifierList subModifier = modifiers();
         while (subModifier.last() == const_ref) {

@@ -11,7 +11,7 @@ ISCObject* BooleanValue::get(ISCObject* requester, const String& member) {
     return NULL;
 }
 
-ISCObject* BooleanValue::call(ISCObject* requester, const String& member, const ISCObjectList& params) {
+ISCObject* BooleanValue::call(ISCObject* requester, const String& member, const ISCObjectList& args) {
     return NULL;
 }
 

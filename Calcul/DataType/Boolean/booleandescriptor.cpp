@@ -5,7 +5,7 @@ BooleanDescriptor::BooleanDescriptor() : TypeDescriptor(bool_key_word) {
     TypeDescriptor::BuiltIn[bool_type] = this;
 }
 
-void BooleanDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance) {
+void BooleanDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
 
 }
 

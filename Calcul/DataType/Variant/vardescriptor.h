@@ -8,7 +8,7 @@ class VarDescriptor : public TypeDescriptor {
 public:
     VarDescriptor();
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
 };
 
 #endif // VARDESCRIPTOR_H

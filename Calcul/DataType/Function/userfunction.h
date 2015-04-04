@@ -19,7 +19,7 @@ public:
     UserFunction(ProcessManager* process);
     ~UserFunction();
 
-    ISCObject* run(ISCObject *self, const ISCObjectList& params);
+    ISCObject* run(ISCObject *self, const ISCObjectList& args);
 
 private:
     ProcessManager* m_process;

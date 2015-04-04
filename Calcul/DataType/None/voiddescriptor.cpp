@@ -9,6 +9,6 @@ VoidDescriptor::VoidDescriptor() : TypeDescriptor(void_key_word) {
     VoidDescriptor::m_noneObject->init(new VoidValue, ISCObject::ExternAcces | ISCObject::ChildAcces | ISCObject::ConstRefAcces);
 }
 
-void VoidDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance) {
+void VoidDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
     *instance = *VoidDescriptor::m_noneObject;
 }

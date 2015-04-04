@@ -10,13 +10,13 @@ class ProcessManager;
 
 class Contexte {
 public:
-    Contexte(ISCObject* thisObject);
+    Contexte(ISCObject* ctx_self);
     Contexte(Contexte *parent = NULL);
 
     ISCObject* get(const String& object);
     ISCObject* get(const String& object, const String& member);
-    ISCObject* call(const String& member, const ISCObjectList& params);
-    ISCObject *call(const String& object, const String& member, const ISCObjectList& params);
+    ISCObject* call(const String& member, const ISCObjectList& args);
+    ISCObject *call(const String& object, const String& member, const ISCObjectList& args);
 
     bool contains(ISCObject* obj);
     bool insert(ISCObject* obj);

@@ -19,7 +19,7 @@ public:
     TypeInfo(TypeDescriptor* descriptor);
     TypeInfo(TypeDescriptor* descriptor, ModifierList modifiers);
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte& accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte& accesMask, ISCObject* instance);
 
     String typeName() const;
     const TypeDescriptor* descriptor() const;

@@ -1,5 +1,6 @@
 #include "iscobject.h"
 #include "Calcul/DataType/iscvalue.h"
+#include "Calcul/DataType/Integer/integervalue.h"
 #include "Calcul/DataType/typeinfo.h"
 
 ISCObject::ISCObject(const TypeInfo& type, const String& name)
@@ -17,8 +18,8 @@ ISCObject::ISCObject(const ISCObject& other, const String& name)
     if (m_name.isEmpty()) m_name.format("@%p", this);
 }
 
-void ISCObject::construct(ProcessManager* process, const ISCObjectList& params) {
-    m_typeInfo.createInstance(process, params, m_accesMask, this);
+void ISCObject::construct(ProcessManager* process, const ISCObjectList& args) {
+    m_typeInfo.createInstance(process, args, m_accesMask, this);
 }
 
 bool ISCObject::instanceOf(const TypeInfo& type) {
@@ -33,15 +34,15 @@ ISCObject *ISCObject::get(ISCObject *requester, const String& member) {
     return m_value->get(requester, member);
 }
 
-ISCObject *ISCObject::call(ISCObject *requester, const String& member, const ISCObjectList& params) {
+ISCObject *ISCObject::call(ISCObject *requester, const String& member, const ISCObjectList& args) {
     if (member == copy_operator) {
-        if (params.size() != 1) {
+        if (args.size() != 1) {
             // TODO : Erreur
         }
-        ISCObject* other = params.first();
+        ISCObject* other = args.first();
         if (other->m_value->instanceOf(m_typeInfo) || other->m_value->inheritFrom(m_typeInfo)) {
             if (m_accesMask & ConstRefAcces || other->m_accesMask & ConstRefAcces) {
-                return m_value->call(requester, this, deep_copy_operator, params);
+                return m_value->call(requester, this, deep_copy_operator, args);
             } else {
                 m_value = other->m_value;
                 return this;
@@ -51,14 +52,16 @@ ISCObject *ISCObject::call(ISCObject *requester, const String& member, const ISC
         }
     }
     else if (member == adress_operator) {
-
+        ISCObject * adress = new ISCObject(TypeDescriptor::BuiltIn[int_type]);
+        adress->init(new IntegerValue((unsigned long)m_value.get()), ExternAcces | ChildAcces | ConstRefAcces);
+        return adress;
     }
     else if (member == const_ref_operator) {
         ISCObject * other = new ISCObject(*this);
         other->m_accesMask |= ConstRefAcces;
         return other;
     }
-    return m_value->call(requester, this, member, params);
+    return m_value->call(requester, this, member, args);
 }
 
 String &ISCObject::name() {

@@ -3,8 +3,8 @@
 ContexteStack::ContexteStack()
 {}
 
-void ContexteStack::createContexte(ISCObject* thisObject) {
-    m_stack.push(new Contexte(thisObject));
+void ContexteStack::createContexte(ISCObject* ctx_self) {
+    m_stack.push(new Contexte(ctx_self));
 }
 
 void ContexteStack::createSubContexte() {

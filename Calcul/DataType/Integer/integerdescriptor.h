@@ -11,7 +11,7 @@ class IntegerDescriptor : public TypeDescriptor {
 public:
     IntegerDescriptor();
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
     static IntegerValue* makeValue(const String& raw);
 
 private:

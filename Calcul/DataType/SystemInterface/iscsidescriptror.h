@@ -8,7 +8,7 @@ class ISCSIDescriptror : public TypeDescriptor {
 public:
     ISCSIDescriptror(const String& name);
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
 };
 
 #endif // ISCSIDESCRIPTROR_H

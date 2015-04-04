@@ -10,8 +10,8 @@ public:
     bool instanceOf(const TypeInfo& type);
     bool inheritFrom(const TypeInfo& type);
     ISCObject* get(ISCObject* requester, const String& member);
-    ISCObject* call(ISCObject* requester, ISCObject* self, const String& member, const ISCObjectList& params);
-    virtual ISCObject* run(ISCObject *self, const ISCObjectList& params)=0;
+    ISCObject* call(ISCObject* requester, ISCObject* self, const String& member, const ISCObjectList& args);
+    virtual ISCObject* run(ISCObject *self, const ISCObjectList& args)=0;
 };
 
 typedef std::tr1::shared_ptr<FunctionValue> FunctionValuePtr;

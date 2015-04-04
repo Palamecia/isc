@@ -9,16 +9,16 @@ BuiltinFunction::~BuiltinFunction() {
     }
 }
 
-ISCObject* BuiltinFunction::run(ISCObject* self, const ISCObjectList& params) {
+ISCObject* BuiltinFunction::run(ISCObject* self, const ISCObjectList& args) {
     for (uint i = 0 ; i < m_shapes.size(); ++i) {
-        if (m_shapes[i].pc == params.size()) {
+        if (m_shapes[i].pc == args.size()) {
             bool good = true;
-            for (uint p = 0; p < params.size(); ++p) {
-                if (!params[p]->instanceOf(*m_shapes[i].pt[p]) || !!params[p]->inheritFrom(*m_shapes[i].pt[p])) {
+            for (uint p = 0; p < args.size(); ++p) {
+                if (!args[p]->instanceOf(*m_shapes[i].pt[p]) || !!args[p]->inheritFrom(*m_shapes[i].pt[p])) {
                     good = false;
                 }
             }
-            if (good) return (*m_shapes[i].code)(self, params);
+            if (good) return (*m_shapes[i].code)(self, args);
         }
     }
     return NULL;

@@ -10,7 +10,7 @@ class BooleanDescriptor : public TypeDescriptor {
 public:
     BooleanDescriptor();
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
     static BooleanValue* makeValue(const String& raw);
 };
 

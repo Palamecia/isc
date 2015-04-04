@@ -8,7 +8,7 @@ class FloatDescriptor : public TypeDescriptor {
 public:
     FloatDescriptor();
 
-    void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
 };
 
 #endif // FLOATDESCRIPTOR_H

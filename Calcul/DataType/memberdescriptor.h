@@ -11,7 +11,7 @@ class ProcessManager;
 class MemberDescriptor {
 public:
     MemberDescriptor(const String& name);
-    virtual void createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance) = 0;
+    virtual void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) = 0;
 
     String name();
 

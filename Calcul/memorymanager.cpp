@@ -91,7 +91,7 @@ void MemoryManager::closeContexte() {
     m_stack.closeSubContexte();
 }
 
-void MemoryManager::initContexte(const StringList& tokens, const ISCObjectList& params) {
+void MemoryManager::initContexte(const StringList& tokens, const ISCObjectList& args) {
 
 }
 

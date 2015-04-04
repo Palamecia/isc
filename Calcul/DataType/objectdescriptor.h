@@ -9,7 +9,7 @@ public:
     ObjectDescriptor(byte accesMask, const TypeInfo &type, const String& name);
 
     ISCObject *newObject();
-    void createInstance(ProcessManager* process, const ISCObjectList& params, byte accesMask, ISCObject* instance);
+    void createInstance(ProcessManager* process, const ISCObjectList& args, byte accesMask, ISCObject* instance);
 
     byte accesMask();
 

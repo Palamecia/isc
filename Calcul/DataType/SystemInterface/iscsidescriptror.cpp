@@ -5,7 +5,7 @@ ISCSIDescriptror::ISCSIDescriptror(const String &name)
     : TypeDescriptor(name)
 {}
 
-void ISCSIDescriptror::createInstance(ProcessManager* process, const List<ISCObject*>& params, byte accesMask, ISCObject* instance) {
+void ISCSIDescriptror::createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
 
     instance->init(ISCSourceManager::instance()->loadInterface(m_name), accesMask);
 

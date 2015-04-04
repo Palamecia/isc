@@ -32,7 +32,7 @@ ISCObject *UserValue::get(ISCObject *requester, const String& member) {
     return NULL;
 }
 
-ISCObject *UserValue::call(ISCObject *requester, ISCObject *self, const String& member, const ISCObjectList& params) {
+ISCObject *UserValue::call(ISCObject *requester, ISCObject *self, const String& member, const ISCObjectList& args) {
     ISCObject* ret = NULL;
     ISCObjectMapping::iterator it = m_members.find(member);
     if (it != m_members.end()) {
@@ -40,7 +40,7 @@ ISCObject *UserValue::call(ISCObject *requester, ISCObject *self, const String& 
 
         FunctionValuePtr fct = std::tr1::dynamic_pointer_cast<FunctionValue>(it->second->value());
 
-        ret = fct->run(self, params);
+        ret = fct->run(self, args);
         if (ret) return ret;
     }
 
@@ -49,7 +49,7 @@ ISCObject *UserValue::call(ISCObject *requester, ISCObject *self, const String& 
         if (it->first == member) return it->second;
 
         // methodes héritées
-        ret = it->second->call(requester, member, params);
+        ret = it->second->call(requester, member, args);
         if (ret) return ret;
     }
 
