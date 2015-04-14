@@ -24,9 +24,8 @@ public:
     StringList args();
     String defaultOutput();
 
-    StringList moduleNames(const StringList& patern);
+    StringList moduleNames(const StringList &patern);
     String modulePath(String module);
-    //File openModuleFile(String module);
 
     StringList listInterfaces();
     ISCSI* loadInterface(const String &name);

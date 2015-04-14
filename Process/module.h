@@ -7,7 +7,6 @@ class Module {
 public:
     Module();
     Module(const String &name);
-    Module(const String &name, ISCSI* input);
 
     String name();
     Step* step(pos_t idx, Dictionary* dico);

@@ -36,20 +36,22 @@ ISCParser::~ISCParser() {
 ISCParser::ISCParser(const String &module)
     : m_commentMode(false), m_input(NULL), m_rawLine(0), m_rawColumn(0) {
 
-    File file(ISCSourceManager::instance()->modulePath(module));
-    file.open(File::ReadOnly);
-    TextStream stream(&file);
+    String path = ISCSourceManager::instance()->modulePath(module);
+    if (!path.isEmpty()) {
+        File file(path);
+        file.open(File::ReadOnly);
 
-    updateCache(stream.readAll());
+        TextStream stream(&file);
+        updateCache(stream.readAll());
+    } else {
+        m_input = ISCSourceManager::instance()->loadInterface(module);
+        updateCache(m_input->nextInstruction());
+    }
+
     while (m_rawData[m_rawLine].startsWith("#!")) ++m_rawLine;
 
     // "//.*?\\n")
     // "/\\*([^*]|[\\n]|(\\*+([^*/]|[\\n])))*\\*+/"
-}
-
-ISCParser::ISCParser(ISCSI* input)
-    : m_commentMode(false), m_input(input), m_rawLine(0), m_rawColumn(0) {
-    updateCache(m_input->nextInstruction());
 }
 
 Step* ISCParser::step(pos_t idx, Dictionary* dico) {
@@ -60,7 +62,10 @@ Step* ISCParser::step(pos_t idx, Dictionary* dico) {
 }
 
 Step* ISCParser::nextStep(Dictionary *dico) {
-    if (m_rawLine >= m_rawData.size()) return NULL;
+    if (m_rawLine >= m_rawData.size()) {
+        if (m_input) updateCache(m_input->nextInstruction());
+        else return NULL;
+    }
 
     const int stepLine = m_rawLine; bool lineOver;
     String tokenType = nextToken(lineOver);

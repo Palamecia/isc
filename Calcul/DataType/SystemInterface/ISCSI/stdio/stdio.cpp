@@ -15,9 +15,15 @@ stdio::~stdio() {
 }
 
 String stdio::nextInstruction() {
-    printf("%s> ", "isc");
-    char buff[1024];
-    return String(buff);
+    size_t size = 1024;
+    char *buff = new char[size];
+
+    printf("\n%s> ", "isc");
+    getline(&buff, &size, stdin);
+
+    String instruction = buff;
+    delete [] buff;
+    return instruction;
 }
 
 void stdio::execPrint(ISCObject* object) {

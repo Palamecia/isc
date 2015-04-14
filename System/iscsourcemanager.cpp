@@ -1,26 +1,29 @@
 #include "iscsourcemanager.h"
 #include "Calcul/DataType/SystemInterface/iscsi.h"
+#include <cstdio>
 #include <cstring>
 
 #ifdef _WIN32
-#define PATH_SEP        "\\"
-#define ISCSI_PATH      "\\iscsi"
-#define MODULE_SUFFIX   ".dll"
+#define PATH_SEP            "\\"
+#define ISCSI_PATH          "\\iscsi"
+#define INTERFACE_SUFFIX    ".dll"
 #else
 #include <unistd.h>
 #include <dirent.h>
 #include <dlfcn.h>
 
-#define PATH_SEP        "/"
-#define ISCSI_PATH      "/iscsi"
-#define MODULE_SUFFIX   ".so"
+#define PATH_SEP            "/"
+#define ISCSI_PATH          "/iscsi"
+#define INTERFACE_SUFFIX    ".so"
 #endif
 
-#define MAX_PATH    4096
+#define MODULE_SUFFIX       ".is"
+#define DEFAULT_MODULE      "stdio"
+#define MAX_PATH            4096
 
 ISCSourceManager* ISCSourceManager::m_instance = NULL;
 
-ISCSourceManager::ISCSourceManager() : m_defaultOutput("stdio") {
+ISCSourceManager::ISCSourceManager() : m_defaultOutput(DEFAULT_MODULE), m_entryModule(DEFAULT_MODULE) {
     char buff[MAX_PATH];
 #ifdef _WIN32
     GetCurrentDirectory(MAX_PATH, buff);
@@ -78,7 +81,7 @@ void ISCSourceManager::init(int argc, char** argv) {
                     m_instance->m_appRootPath += PATH_SEP + sourcePath.first();
                     sourcePath.removeAt(0);
                 }
-                m_instance->m_entryModule = sourcePath.first().replace(".is", "");
+                m_instance->m_entryModule = sourcePath.first().replace(MODULE_SUFFIX, "");
                 entryPointFound = true;
             } else {
                 m_instance->m_args.append(argv[argn]);
@@ -113,7 +116,20 @@ StringList ISCSourceManager::moduleNames(const StringList& patern) {
 }
 
 String ISCSourceManager::modulePath(String module) {
-    return m_appRootPath + PATH_SEP + module.replace(".", PATH_SEP) + ".is";
+    String path;
+    module.replace(".", PATH_SEP);
+
+    path = m_appRootPath + PATH_SEP + module + MODULE_SUFFIX;
+    if (FILE* file = fopen(path.c_str(), "r")) {
+        fclose(file);
+        return path;
+    }
+    path = m_iscRootPath + PATH_SEP + module + MODULE_SUFFIX;
+    if (FILE* file = fopen(path.c_str(), "r")) {
+        fclose(file);
+        return path;
+    }
+    return String();
 }
 
 StringList ISCSourceManager::listInterfaces() {
@@ -135,7 +151,6 @@ ISCSI* ISCSourceManager::loadInterface(const String &name) {
 
 #else
         interface.handle = dlopen(String(*interface.path + interface.file).c_str(), RTLD_LAZY);
-        // dlerror();
 #endif
     }
 
@@ -156,7 +171,7 @@ void ISCSourceManager::findInterfaces(String &path) {
         iscsi.path = &path;
         iscsi.file = ISCSI_PATH PATH_SEP + interfaces[i];
         iscsi.handle = NULL;
-        m_systemInterfaces.insert(InterfaceMapping::value_type(interfaces[i].replace(MODULE_SUFFIX, ""), iscsi));
+        m_systemInterfaces.insert(InterfaceMapping::value_type(interfaces[i].replace(INTERFACE_SUFFIX, ""), iscsi));
     }
 }
 

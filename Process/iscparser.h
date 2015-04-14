@@ -13,7 +13,6 @@ class ISCParser {
 public:
     ISCParser();
     ISCParser(const String &module);
-    ISCParser(ISCSI* input);
     ~ISCParser();
 
     Step* step(pos_t idx, Dictionary *dico);

@@ -9,11 +9,6 @@ Module::Module(const String& name)
     m_parser(name)
 {}
 
-Module::Module(const String& name, ISCSI* input)
-    : m_name(name),
-    m_parser(input)
-{}
-
 String Module::name() {
     return m_name;
 }
