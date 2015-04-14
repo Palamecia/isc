@@ -1,4 +1,5 @@
 #include "processmanager.h"
+#include "Calcul/DataType/Boolean/booleanvalue.h"
 #include "System/iscsourcemanager.h"
 
 #define exec_section if (m_stepManager.execMode())
@@ -149,7 +150,8 @@ void ProcessManager::stepEnd(Step* step) {
         break;
     case StepManager::Loop:
         exec_section {
-            m_stepManager.restartLastClosedBlock();
+            if (m_stepManager.lastClosedBlock().executed)
+                m_stepManager.restartLastClosedBlock();
         }
         break;
     case StepManager::Visibility:
@@ -269,5 +271,14 @@ void ProcessManager::stepWhile(Step* step) {
     }
 
     m_stepManager.startBlock(StepManager::Loop);
+    exec_section {
+        ISCObject* object = m_memory.calc(step->tokens());
+        BooleanValuePtr value = std::tr1::dynamic_pointer_cast<BooleanValue>(object->value());
+        delete object;
+        if (!value) {
+            // TODO : Erreur
+        }
+        if (!value->toBool()) m_stepManager.skipBlock(StepManager::Loop);
+    }
 }
 
