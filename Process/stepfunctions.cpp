@@ -142,6 +142,11 @@ void ProcessManager::stepEnd(Step* step) {
             m_memory.closeElement();
         }
         break;
+    case StepManager::Print:
+        exec_section {
+            m_output.pop();
+        }
+        break;
     case StepManager::Call:
         m_stepManager.exitCall();
         defautlReturn = new ISCObject(TypeDescriptor::BuiltIn[void_type]);
