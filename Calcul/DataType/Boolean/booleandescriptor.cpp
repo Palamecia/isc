@@ -21,3 +21,9 @@ BooleanValue* BooleanDescriptor::makeValue(const String& raw) {
     }
     return value;
 }
+
+BooleanValue* BooleanDescriptor::fromData(bool data) {
+    BooleanValue* value = new BooleanValue(data);
+    //value->setFunctionMapping(m_fcts);
+    return value;
+}

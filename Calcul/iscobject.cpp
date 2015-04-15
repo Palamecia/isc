@@ -1,5 +1,6 @@
 #include "iscobject.h"
 #include "Calcul/DataType/iscvalue.h"
+#include "Calcul/DataType/Integer/integerdescriptor.h"
 #include "Calcul/DataType/Integer/integervalue.h"
 #include "Calcul/DataType/typeinfo.h"
 
@@ -53,7 +54,7 @@ ISCObject *ISCObject::call(ISCObject *requester, const String& member, const ISC
     }
     else if (member == adress_operator) {
         ISCObject * adress = new ISCObject(TypeDescriptor::BuiltIn[int_type]);
-        adress->init(new IntegerValue((unsigned long)m_value.get()), ExternAcces | ChildAcces | ConstRefAcces);
+        adress->init( IntegerDescriptor::fromData((unsigned long)m_value.get()), ExternAcces | ChildAcces | ConstRefAcces);
         return adress;
     }
     else if (member == const_ref_operator) {

@@ -2,6 +2,7 @@
 #include "Calcul/DataType/Function/functionvalue.h"
 
 BuiltinValue::BuiltinValue()
+    : m_fcts(NULL)
 {}
 
 ISCObject* BuiltinValue::get(ISCObject *requester, const String &member) {

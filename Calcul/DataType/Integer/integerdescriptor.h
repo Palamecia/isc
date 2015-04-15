@@ -13,6 +13,7 @@ public:
 
     void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
     static IntegerValue* makeValue(const String& raw);
+    static IntegerValue* fromData(int data);
 
 private:
     static ISCObjectMapping* m_fcts;

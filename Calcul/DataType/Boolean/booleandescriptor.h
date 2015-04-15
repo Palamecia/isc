@@ -12,6 +12,7 @@ public:
 
     void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
     static BooleanValue* makeValue(const String& raw);
+    static BooleanValue* fromData(bool data);
 };
 
 #endif // BOOLEANDESCRIPTOR_H

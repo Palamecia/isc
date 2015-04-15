@@ -36,3 +36,9 @@ IntegerValue* IntegerDescriptor::makeValue(const String& raw) {
     value->setFunctionMapping(m_fcts);
     return value;
 }
+
+IntegerValue* IntegerDescriptor::fromData(int data) {
+    IntegerValue* value = new IntegerValue(data);
+    value->setFunctionMapping(m_fcts);
+    return value;
+}
