@@ -162,14 +162,17 @@ void Calcul::operatorResolution(MemoryManager *memory, const OperatorSet& operat
 }
 
 ISCObjectList Calcul::lastResolution(MemoryManager* memory) {
+    ISCObject *object;
     ISCObjectList results;
     for (int pos = 0; pos < size(); ++pos) {
         if (tocken(pos) == comma_operator) {
-            results.append(new ISCObject(*memory->getObject(tocken(pos - 1))));
+            object = memory->getObject(tocken(pos - 1));
+            results.append(new ISCObject(*object));
             resolveUnary(pos - 1, String());
             pos = 0;
         }
     }
-    results.append(new ISCObject(*memory->getObject(tocken(0))));
+    object = memory->getObject(tocken(0));
+    results.append(new ISCObject(*object));
     return results;
 }

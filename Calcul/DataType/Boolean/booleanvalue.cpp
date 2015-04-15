@@ -1,6 +1,6 @@
 #include "booleanvalue.h"
 
-BooleanValue::BooleanValue(bool value) : m_value(value)
+BooleanValue::BooleanValue(ISCObjectMapping *fcts, bool value) : BuiltinValue(fcts), m_value(value)
 {}
 
 bool BooleanValue::instanceOf(const TypeInfo& type) {

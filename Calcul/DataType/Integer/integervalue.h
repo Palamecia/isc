@@ -5,7 +5,7 @@
 
 class IntegerValue : public BuiltinValue {
 public:
-    IntegerValue(const int value = 0);
+    IntegerValue(ISCObjectMapping *fcts, const int value = 0);
 
     virtual bool instanceOf(const TypeInfo& type);
     virtual ISCObject* get(ISCObject* requester, const String& member);

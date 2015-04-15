@@ -2,6 +2,7 @@
 #include "Calcul/DataType/SystemInterface/iscsidescriptror.h"
 
 ISCSI::ISCSI() :
+    BuiltinValue(NULL),
     m_printEnabeled(false) {
 }
 

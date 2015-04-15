@@ -1,6 +1,6 @@
 #include "voidvalue.h"
 
-VoidValue::VoidValue()
+VoidValue::VoidValue() : BuiltinValue(NULL)
 {}
 
 bool VoidValue::inheritFrom(const TypeInfo &) {

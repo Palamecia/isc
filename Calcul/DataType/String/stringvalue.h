@@ -5,7 +5,7 @@
 
 class StringValue : public BuiltinValue {
 public:
-    StringValue(String value = String());
+    StringValue(ISCObjectMapping *fcts, String value = String());
 
     virtual bool instanceOf(const TypeInfo& type);
     virtual ISCObject* get(ISCObject* requester, const String& member);

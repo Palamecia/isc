@@ -1,6 +1,6 @@
 #include "stringvalue.h"
 
-StringValue::StringValue(String value) : m_value(value)
+StringValue::StringValue(ISCObjectMapping *fcts, String value) : BuiltinValue(fcts), m_value(value)
 {}
 
 bool StringValue::instanceOf(const TypeInfo& type) {

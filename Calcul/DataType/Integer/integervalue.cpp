@@ -1,6 +1,6 @@
 #include "integervalue.h"
 
-IntegerValue::IntegerValue(const int value) : m_value(value)
+IntegerValue::IntegerValue(ISCObjectMapping *fcts, const int value) : BuiltinValue(fcts), m_value(value)
 {}
 
 bool IntegerValue::instanceOf(const TypeInfo& type) {

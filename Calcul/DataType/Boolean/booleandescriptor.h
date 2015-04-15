@@ -2,6 +2,7 @@
 #define BOOLEANDESCRIPTOR_H
 
 #include "Calcul/DataType/typedescriptor.h"
+#include "Calcul/iscobject.h"
 #include "Syntax.h"
 
 class BooleanValue;
@@ -13,6 +14,9 @@ public:
     void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
     static BooleanValue* makeValue(const String& raw);
     static BooleanValue* fromData(bool data);
+
+private:
+    static ISCObjectMapping* m_fcts;
 };
 
 #endif // BOOLEANDESCRIPTOR_H

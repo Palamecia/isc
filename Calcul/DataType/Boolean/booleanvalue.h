@@ -6,7 +6,7 @@
 
 class BooleanValue : public BuiltinValue {
 public:
-    BooleanValue(bool value = false);
+    BooleanValue(ISCObjectMapping *fcts, bool value = false);
 
     virtual bool instanceOf(const TypeInfo& type);
     virtual ISCObject* get(ISCObject* requester, const String& member);

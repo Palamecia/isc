@@ -1,8 +1,8 @@
 #include "Calcul/DataType/builtinvalue.h"
 #include "Calcul/DataType/Function/functionvalue.h"
 
-BuiltinValue::BuiltinValue()
-    : m_fcts(NULL)
+BuiltinValue::BuiltinValue(ISCObjectMapping *fcts)
+    : m_fcts(fcts)
 {}
 
 ISCObject* BuiltinValue::get(ISCObject *requester, const String &member) {
@@ -24,8 +24,4 @@ ISCObject* BuiltinValue::call(ISCObject* requester, ISCObject *self, const Strin
         // TODO : Erreur
     }
     return ret;
-}
-
-void BuiltinValue::setFunctionMapping(ISCObjectMapping *mapping) {
-    m_fcts = mapping;
 }

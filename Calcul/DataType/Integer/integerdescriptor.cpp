@@ -23,8 +23,7 @@ IntegerDescriptor::IntegerDescriptor() : TypeDescriptor(int_key_word) {
 }
 
 void IntegerDescriptor::createInstance(ProcessManager*, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
-    IntegerValue* value = new IntegerValue;
-    value->setFunctionMapping(m_fcts);
+    IntegerValue* value = new IntegerValue(m_fcts);
     instance->init(value, accesMask);
 }
 
@@ -32,13 +31,11 @@ IntegerValue* IntegerDescriptor::makeValue(const String& raw) {
     bool valide;
     int integer = raw.toInt(&valide);
     if (!valide) return NULL;
-    IntegerValue* value = new IntegerValue(integer);
-    value->setFunctionMapping(m_fcts);
+    IntegerValue* value = new IntegerValue(m_fcts, integer);
     return value;
 }
 
 IntegerValue* IntegerDescriptor::fromData(int data) {
-    IntegerValue* value = new IntegerValue(data);
-    value->setFunctionMapping(m_fcts);
+    IntegerValue* value = new IntegerValue(m_fcts, data);
     return value;
 }
