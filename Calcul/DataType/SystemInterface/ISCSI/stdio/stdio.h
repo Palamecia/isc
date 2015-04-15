@@ -10,6 +10,7 @@ public:
 
     virtual String nextInstruction();
     virtual void execPrint(ISCObject* object);
+    virtual void catchError(ISCObject *error);
 };
 
 isc_share(stdio)

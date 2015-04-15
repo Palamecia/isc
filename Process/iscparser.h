@@ -21,6 +21,8 @@ public:
     inline uint line(pos_t idx) { return m_steps[idx]->line(); }
     inline String raw(pos_t idx) { return m_rawData[line(idx)]; }
 
+    bool isReadingInterface();
+
     static bool isOperator(const String& op);
     static bool isWhiteSpace(const String& ws);
 private:

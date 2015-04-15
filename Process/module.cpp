@@ -24,3 +24,7 @@ uint Module::line(pos_t idx) {
 String Module::raw(pos_t idx) {
     return m_parser.raw(idx);
 }
+
+bool Module::isInterface() {
+    return m_parser.isReadingInterface();
+}

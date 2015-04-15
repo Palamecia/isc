@@ -7,6 +7,7 @@
 enum TypeId {
     var_type,
     void_type,
+    error_type,
     int_type,
     float_type,
     bool_type,

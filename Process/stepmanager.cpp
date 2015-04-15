@@ -62,7 +62,11 @@ void StepManager::restartLastClosedBlock() {
     m_callStack.top().pos = m_lastClosed.pos;
 }
 
-void StepManager::dumpStack(List<CallDump>& dump) {
+bool StepManager::readingFromInterface() {
+    m_callStack.top().module->isInterface();
+}
+
+void StepManager::dumpStack(CallDumpList &dump) {
     Stack<DataPointer>::iterator it;
     for (it = m_callStack.begin(); it != m_callStack.end(); ++it) {
         CallDump line;

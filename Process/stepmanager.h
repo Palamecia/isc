@@ -4,12 +4,7 @@
 #include "module.h"
 #include "Util/stack.h"
 #include "Calcul/memorymanager.h"
-
-struct CallDump {
-    String  module;
-    uint    line;
-    String  raw;
-};
+#include "Calcul/DataType/Error/errorvalue.h"
 
 class StepManager {
 public:
@@ -65,7 +60,8 @@ public:
     void restartBlock(unsigned int masque = Any);
     void restartLastClosedBlock();
 
-    void dumpStack(List<CallDump>& dump);
+    bool readingFromInterface();
+    void dumpStack(CallDumpList& dump);
 private:
     typedef Map<String, Module> ModuleMapping;
     ModuleMapping       m_moduleCache;

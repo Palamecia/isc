@@ -30,8 +30,15 @@ void ProcessManager::exec() {
             if (m_return) break;
         } catch (ISCObject* err) {
             // dump call stack
+            using namespace std::tr1;
+            if (ErrorValuePtr value = dynamic_pointer_cast<ErrorValue>(err->value())) {
+                CallDumpList stackDump;
+                m_stepManager.dumpStack(stackDump);
+                value->setStack(stackDump);
+            }
             m_throw = err;
             m_stepManager.skipBlock(StepManager::Try);
+            if (m_stepManager.readingFromInterface()) break;
         }
     }
 }

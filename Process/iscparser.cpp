@@ -245,6 +245,10 @@ String ISCParser::nextString(const String& delim, bool &lineOver) {
     return token;
 }
 
+bool ISCParser::isReadingInterface() {
+    return m_input != NULL;
+}
+
 bool ISCParser::isOperator(const String& op) {
     return m_operators.contains(op);
 }

@@ -3,6 +3,7 @@
 
 #define bool_key_word       "bool"
 #define color_key_word      "color"
+#define error_key_word      "error"
 #define float_key_word      "float"
 #define int_key_word        "int"
 #define string_key_word     "string"

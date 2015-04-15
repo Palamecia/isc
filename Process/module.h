@@ -13,6 +13,8 @@ public:
     uint line(pos_t idx);
     String raw(pos_t idx);
 
+    bool isInterface();
+
 private:
     String      m_name;
     ISCParser   m_parser;

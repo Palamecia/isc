@@ -1,4 +1,5 @@
 #include "memorymanager.h"
+#include "DataType/Error/errordescriptor.h"
 #include "DataType/Integer/integervalue.h"
 #include "DataType/Boolean/booleanvalue.h"
 #include "DataType/String/stringvalue.h"
@@ -11,6 +12,7 @@ MemoryManager::MemoryManager()
       m_application("Application") {
     m_application.declareType(TypeDescriptor::BuiltIn[var_type] ? TypeDescriptor::BuiltIn[var_type] : new VarDescriptor);
     m_application.declareType(TypeDescriptor::BuiltIn[void_type] ? TypeDescriptor::BuiltIn[void_type] : new VoidDescriptor);
+    m_application.declareType(TypeDescriptor::BuiltIn[error_type] ? TypeDescriptor::BuiltIn[error_type] : new ErrorDescriptor);
     m_application.declareType(TypeDescriptor::BuiltIn[int_type] ? TypeDescriptor::BuiltIn[int_type] : new IntegerDescriptor);
     m_application.declareType(TypeDescriptor::BuiltIn[float_type] ? TypeDescriptor::BuiltIn[float_type] : new FloatDescriptor);
     m_application.declareType(TypeDescriptor::BuiltIn[bool_type] ? TypeDescriptor::BuiltIn[bool_type] : new BooleanDescriptor);

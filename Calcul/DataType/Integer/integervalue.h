@@ -8,7 +8,6 @@ public:
     IntegerValue(ISCObjectMapping *fcts, const int value = 0);
 
     virtual bool instanceOf(const TypeInfo& type);
-    virtual ISCObject* get(ISCObject* requester, const String& member);
 
     int &toInt();
 

@@ -1,6 +1,7 @@
 #include "processmanager.h"
 #include "Calcul/DataType/Boolean/booleanvalue.h"
 #include "System/iscsourcemanager.h"
+#include "System/errormanager.h"
 
 #define exec_section if (m_stepManager.execMode())
 
@@ -37,7 +38,7 @@ void ProcessManager::stepBalise(Step* step) {
 
 void ProcessManager::stepBreak(Step* step) {
     if (step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(UNEXPECTED_BLOC);
     }
 
     exec_section {
@@ -61,7 +62,7 @@ void ProcessManager::stepCalc(Step* step) {
 
 void ProcessManager::stepCase(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Case);
@@ -75,7 +76,7 @@ void ProcessManager::stepCase(Step* step) {
 
 void ProcessManager::stepCatch(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Catch);
@@ -92,7 +93,7 @@ void ProcessManager::stepCatch(Step* step) {
 
 void ProcessManager::stepClass(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Typedef);
@@ -100,7 +101,7 @@ void ProcessManager::stepClass(Step* step) {
 
 void ProcessManager::stepContinue(Step* step) {
     if (step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(UNEXPECTED_BLOC);
     }
 
     exec_section {
@@ -110,7 +111,7 @@ void ProcessManager::stepContinue(Step* step) {
 
 void ProcessManager::stepDefault(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Case);
@@ -118,7 +119,7 @@ void ProcessManager::stepDefault(Step* step) {
 
 void ProcessManager::stepElse(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::EndCond);
@@ -168,7 +169,7 @@ void ProcessManager::stepEnd(Step* step) {
 
 void ProcessManager::stepEnum(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Typedef);
@@ -176,7 +177,7 @@ void ProcessManager::stepEnum(Step* step) {
 
 void ProcessManager::stepFor(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Loop);
@@ -184,7 +185,7 @@ void ProcessManager::stepFor(Step* step) {
 
 void ProcessManager::stepIf(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Condition);
@@ -203,7 +204,7 @@ void ProcessManager::stepLoad(Step* step) {
 
 void ProcessManager::stepPrint(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Print);
@@ -219,7 +220,7 @@ void ProcessManager::stepPrint(Step* step) {
 
 void ProcessManager::stepReturn(Step* step) {
     if (step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(UNEXPECTED_BLOC);
     }
     exec_section {
         m_return = m_memory.calc(step->tokens());
@@ -228,7 +229,7 @@ void ProcessManager::stepReturn(Step* step) {
 
 void ProcessManager::stepSwitch(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Switch);
@@ -236,7 +237,7 @@ void ProcessManager::stepSwitch(Step* step) {
 
 void ProcessManager::stepTry(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Try);
@@ -244,7 +245,7 @@ void ProcessManager::stepTry(Step* step) {
 
 void ProcessManager::stepThrow(Step* step) {
     if (step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(UNEXPECTED_BLOC);
     }
 
     exec_section {
@@ -255,13 +256,13 @@ void ProcessManager::stepThrow(Step* step) {
 
 void ProcessManager::stepYield(Step* step) {
     if (step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(UNEXPECTED_BLOC);
     }
 }
 
 void ProcessManager::stepVisibility(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Visibility);
@@ -272,7 +273,7 @@ void ProcessManager::stepVisibility(Step* step) {
 
 void ProcessManager::stepWhile(Step* step) {
     if (!step->isCreatingContext()) {
-        // TODO : Erreur
+        raise_error(EXPECTED_BLOC);
     }
 
     m_stepManager.startBlock(StepManager::Loop);

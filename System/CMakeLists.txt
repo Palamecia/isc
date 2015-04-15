@@ -7,6 +7,7 @@ set(${PROJECT_NAME}_HDR
 
 set(${PROJECT_NAME}_SRC
     errormanager.cpp
+    errormanager_en.cpp
     iscsourcemanager.cpp
 )
 

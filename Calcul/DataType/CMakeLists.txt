@@ -16,6 +16,8 @@ set(${PROJECT_NAME}_HDR
     Class/classdescriptor.h
     Class/uservalue.h
     Color/colordescriptor.h
+    Error/errordescriptor.h
+    Error/errorvalue.h
     Float/floatdescriptor.h
     Function/builtinfunction.h
     Function/functionvalue.h
@@ -44,6 +46,8 @@ set(${PROJECT_NAME}_SRC
     Class/classdescriptor.cpp
     Class/uservalue.cpp
     Color/colordescriptor.cpp
+    Error/errordescriptor.cpp
+    Error/errorvalue.cpp
     Float/floatdescriptor.cpp
     Function/builtinfunction.cpp
     Function/functionvalue.cpp

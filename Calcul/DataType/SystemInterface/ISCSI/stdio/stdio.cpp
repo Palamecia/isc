@@ -5,6 +5,7 @@
 #include "Calcul/DataType/Integer/integervalue.h"
 #include "Calcul/DataType/Boolean/booleanvalue.h"
 #include "Calcul/DataType/String/stringvalue.h"
+#include "Calcul/DataType/Error/errorvalue.h"
 
 stdio::stdio() {
     setPrintEnabeled(true);
@@ -37,4 +38,17 @@ void stdio::execPrint(ISCObject* object) {
     else if (StringValuePtr value = dynamic_pointer_cast<StringValue>(object->value())) {
         printf("%s", value->toString().c_str());
     }
+    else if (ErrorValuePtr value = dynamic_pointer_cast<ErrorValue>(object->value())) {
+        CallDumpList& stackDump = value->stack();
+        for (int i = 0; i < stackDump.size(); ++i) {
+            CallDump& call = stackDump[i];
+            printf("%s:%d\n", call.module.c_str(), call.line+1);
+            printf("\t%s\n", call.raw.c_str());
+        }
+        printf("%s\n", value->toText().c_str());
+    }
+}
+
+void stdio::catchError(ISCObject *error) {
+    execPrint(error);
 }
