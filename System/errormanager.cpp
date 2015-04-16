@@ -4,18 +4,20 @@
 #include "Calcul/DataType/Error/errordescriptor.h"
 #include "Calcul/DataType/Error/errorvalue.h"
 
+#include <cstdio>
+
 static ErrorMappin errorFormats = ErrorMappin();
 
 ISCObject* errormanager_makeError(ErrorId id, ...) {
-    const char *form = errorFormats[id].c_str();
-    va_list arg;
-    va_start(arg, form);
+    char buff[1024];
 
-    String errorMessage;
-    errorMessage.format(form, arg);
+    va_list arg;
+    va_start(arg, id);
+    vsprintf(buff, errorFormats[id].c_str(), arg);
+    va_end(arg);
 
     ISCObject* object = new ISCObject(TypeDescriptor::BuiltIn[error_type]);
-    object->init(ErrorDescriptor::fromData(errorMessage));
+    object->init(ErrorDescriptor::fromData(buff));
     return object;
 }
 

@@ -17,10 +17,11 @@ String::String(const char c) : std::string(1, c)
 {}
 
 String& String::format(const char *form, ...) {
+    char buff[1024];
     va_list arg;
     va_start(arg, form);
-    char buff[1024];
-    sprintf(buff, form, arg);
+    vsprintf(buff, form, arg);
+    va_end(arg);
     *this = String(buff);
     return *this;
 }

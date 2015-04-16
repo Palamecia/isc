@@ -19,9 +19,6 @@ public:
     int checkExec();
 
 private:
-    void processEvent();
-
-private:
     StepManager m_stepManager;
     MemoryManager m_memory;
 

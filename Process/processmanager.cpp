@@ -23,11 +23,10 @@ void ProcessManager::setDefaultOutput(const String& output) {
 }
 
 void ProcessManager::exec() {
-    while (Step* step = m_stepManager.nextStep()) {
+    Step* step;
+    while ((!m_return) && (step = m_stepManager.nextStep())) {
         try {
             step->exec(this);
-            processEvent();
-            if (m_return) break;
         } catch (ISCObject* err) {
             // dump call stack
             using namespace std::tr1;
@@ -59,8 +58,4 @@ int ProcessManager::checkExec() {
         return -1;
     }
     return 0;
-}
-
-void ProcessManager::processEvent() {
-
 }

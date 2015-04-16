@@ -1,6 +1,7 @@
 #include "calcul.h"
 #include "memorymanager.h"
 #include "Process/iscparser.h"
+#include "System/errormanager.h"
 
 const List<Calcul::OperatorSet> Calcul::operatorPrecedence = List<Calcul::OperatorSet>()
         << Calcul::OperatorSet(StringList()
@@ -138,8 +139,11 @@ void Calcul::operatorResolution(MemoryManager *memory, const OperatorSet& operat
             case OperatorSet::Binary:
                 if (pos <= 0 || pos >= size()-1) break;
                 lvalue = memory->getObject(tocken(pos-1));
+                if (!lvalue) raise_error(UNKNOWN_TOKEN, tocken(pos-1).c_str());
                 rvalue = memory->getObject(tocken(pos+1));
+                if (!rvalue) raise_error(UNKNOWN_TOKEN, tocken(pos+1).c_str());
                 result = lvalue->call(self, tocken(pos), ISCObjectList() << rvalue);
+                if (!result) raise_error(BINARY_INVALID_OPERANDS, tocken(pos-1).c_str(), tocken(pos+1).c_str(), tocken(pos).c_str());
                 memory->m_stack.push(result);
                 resolveBinary(pos, result->name());
                 break;
@@ -147,7 +151,9 @@ void Calcul::operatorResolution(MemoryManager *memory, const OperatorSet& operat
                 if (pos >= size()-1) break;
                 if (pos > 0 && !ISCParser::isOperator(tocken(pos-1))) continue;
                 rvalue = memory->getObject(tocken(pos+1));
+                if (!rvalue) raise_error(UNKNOWN_TOKEN, tocken(pos+1).c_str());
                 result = rvalue->call(self, tocken(pos), ISCObjectList());
+                if (!result) raise_error(UNARY_INVALID_OPERANDS, tocken(pos+1).c_str(), tocken(pos).c_str());
                 memory->m_stack.push(result);
                 resolveUnary(pos, result->name());
                 break;
@@ -167,12 +173,14 @@ ISCObjectList Calcul::lastResolution(MemoryManager* memory) {
     for (int pos = 0; pos < size(); ++pos) {
         if (tocken(pos) == comma_operator) {
             object = memory->getObject(tocken(pos - 1));
+            if (!object) raise_error(UNKNOWN_TOKEN, tocken(pos - 1).c_str());
             results.append(new ISCObject(*object));
             resolveUnary(pos - 1, String());
             pos = 0;
         }
     }
     object = memory->getObject(tocken(0));
+    if (!object) raise_error(UNKNOWN_TOKEN, tocken(0).c_str());
     results.append(new ISCObject(*object));
     return results;
 }

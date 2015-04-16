@@ -227,10 +227,17 @@ String ISCParser::nextString(const String& delim, bool &lineOver) {
     while (m_rawColumn < lineSize) {
         // Lecture de la chaine
         Char ch = m_rawData[m_rawLine][m_rawColumn];
-        ++m_rawColumn;
         if ((lineOver = (m_rawColumn >= lineSize - 1))) {
             m_rawColumn = 0;
-            ++m_rawLine;
+            if (++m_rawLine >= m_rawData.size()) {
+                if (m_input) {
+                    updateCache(m_input->nextInstruction());
+                } else {
+                    // TODO : Erreur
+                }
+            }
+        } else {
+            ++m_rawColumn;
         }
 
         // Traitement du caractère

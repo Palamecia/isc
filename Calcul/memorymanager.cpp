@@ -138,7 +138,7 @@ ISCObject* MemoryManager::getObject(const String& tocken) {
         return object;
     }
     // gestion constantes
-    return NULL;
+    return NULL; // TODO : return NullValue object
 }
 
 TypeDescriptor* MemoryManager::getType(const String& tocken, TypeDescriptor* parent) {
