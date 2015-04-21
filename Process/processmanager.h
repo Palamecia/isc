@@ -28,6 +28,8 @@ private:
     ISCObject* m_return;
     ISCObject* m_throw;
 
+    bool m_loopBack;
+
 private:
     StepFunction stepBalise;
     StepFunction stepBreak;

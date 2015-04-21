@@ -1,14 +1,19 @@
 #include "voiddescriptor.h"
 #include "voidvalue.h"
 
-ISCObject* VoidDescriptor::m_noneObject = NULL;
+ISCValuePtr VoidDescriptor::m_none = VoidValuePtr(new VoidValue);
+ISCObject* VoidDescriptor::m_instance = NULL;
 
 VoidDescriptor::VoidDescriptor() : TypeDescriptor(void_key_word) {
     TypeDescriptor::BuiltIn[void_type] = this;
-    VoidDescriptor::m_noneObject = new ISCObject(this, none_key_word);
-    VoidDescriptor::m_noneObject->init(new VoidValue, ISCObject::ExternAcces | ISCObject::ChildAcces | ISCObject::ConstRefAcces);
+    m_instance = new ISCObject(this, none_key_word);
+    createInstance(NULL, ISCObjectList(), ISCObject::ExternAcces | ISCObject::ChildAcces, m_instance);
 }
 
 void VoidDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
-    *instance = *VoidDescriptor::m_noneObject;
+    instance->init(m_none.get(), accesMask);
+}
+
+ISCObject* VoidDescriptor::instance() {
+    return m_instance;
 }

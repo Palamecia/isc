@@ -1,9 +1,11 @@
 #include "memorymanager.h"
 #include "DataType/Error/errordescriptor.h"
-#include "DataType/Integer/integervalue.h"
 #include "DataType/Boolean/booleanvalue.h"
+#include "DataType/Integer/integervalue.h"
 #include "DataType/String/stringvalue.h"
 #include "DataType/SystemInterface/iscsidescriptror.h"
+#include "DataType/None/voiddescriptor.h"
+#include "DataType/Null/nulldescriptor.h"
 #include "System/iscsourcemanager.h"
 #include "Syntax.h"
 
@@ -133,12 +135,13 @@ ISCObject* MemoryManager::getObject(const String& tocken) {
         return object;
     }
     if (tocken == null_key_word) {
-        ISCObject* object = new ISCObject(TypeDescriptor::BuiltIn[void_type]);
-        m_stack.push(object);
-        return object;
+        return NullDescriptor::instance();
+    }
+    if (tocken == none_key_word) {
+        return VoidDescriptor::instance();
     }
     // gestion constantes
-    return NULL; // TODO : return NullValue object
+    return NULL;
 }
 
 TypeDescriptor* MemoryManager::getType(const String& tocken, TypeDescriptor* parent) {

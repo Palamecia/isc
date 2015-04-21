@@ -27,6 +27,8 @@ set(${PROJECT_NAME}_HDR
     Integer/integervalue.h
     None/voiddescriptor.h
     None/voidvalue.h
+    Null/nulldescriptor.h
+    Null/nullvalue.h
     String/stringdescriptor.h
     String/stringvalue.h
     SystemInterface/iscsi.h
@@ -56,6 +58,8 @@ set(${PROJECT_NAME}_SRC
     Integer/integervalue.cpp
     None/voiddescriptor.cpp
     None/voidvalue.cpp
+    Null/nulldescriptor.cpp
+    Null/nullvalue.cpp
     String/stringdescriptor.cpp
     String/stringvalue.cpp
     SystemInterface/iscsi.cpp

@@ -16,4 +16,6 @@ public:
     virtual ISCObject* call(ISCObject* requester, ISCObject* self, const String& member, const ISCObjectList& args) = 0;
 };
 
+typedef std::tr1::shared_ptr<ISCValue> ISCValuePtr;
+
 #endif // ISCVALUE_H

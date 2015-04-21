@@ -105,6 +105,7 @@ void ProcessManager::stepContinue(Step* step) {
     }
 
     exec_section {
+        m_loopBack = true;
         m_stepManager.restartBlock(StepManager::Loop);
     }
 }
@@ -125,7 +126,7 @@ void ProcessManager::stepElse(Step* step) {
     m_stepManager.startBlock(StepManager::EndCond);
     exec_section {
         if (m_stepManager.lastClosedBlock().type != StepManager::Condition) {
-            // TODO : Erreur
+            raise_error(UNEXPECTED_TOKEN, else_tocken);
         }
         if (m_stepManager.lastClosedBlock().executed) {
             m_stepManager.skipBlock();
@@ -156,8 +157,12 @@ void ProcessManager::stepEnd(Step* step) {
         break;
     case StepManager::Loop:
         exec_section {
-            if (m_stepManager.lastClosedBlock().executed)
+            if (m_stepManager.lastClosedBlock().executed) {
+                m_loopBack = true;
                 m_stepManager.restartLastClosedBlock();
+            } else {
+                m_memory.closeContexte();
+            }
         }
         break;
     case StepManager::Visibility:
@@ -181,6 +186,11 @@ void ProcessManager::stepFor(Step* step) {
     }
 
     m_stepManager.startBlock(StepManager::Loop);
+
+    exec_section {
+        if (m_loopBack) m_loopBack = false;
+        else m_memory.createSubContexte();
+    }
 }
 
 void ProcessManager::stepIf(Step* step) {
@@ -189,6 +199,16 @@ void ProcessManager::stepIf(Step* step) {
     }
 
     m_stepManager.startBlock(StepManager::Condition);
+
+    exec_section {
+        ISCObject *object = m_memory.calc(step->tokens());
+        BooleanValuePtr value = std::tr1::dynamic_pointer_cast<BooleanValue>(object->value());
+        delete object;
+        if (!value) {
+            raise_error(UNEXPECTED_RETURN_TYPE, bool_key_word);
+        }
+        if (!value->toBool()) m_stepManager.skipBlock(StepManager::Condition);
+    }
 }
 
 void ProcessManager::stepLoad(Step* step) {
@@ -278,11 +298,13 @@ void ProcessManager::stepWhile(Step* step) {
 
     m_stepManager.startBlock(StepManager::Loop);
     exec_section {
+        if (m_loopBack) m_loopBack = false;
+        else m_memory.createSubContexte();
         ISCObject* object = m_memory.calc(step->tokens());
         BooleanValuePtr value = std::tr1::dynamic_pointer_cast<BooleanValue>(object->value());
         delete object;
         if (!value) {
-            // TODO : Erreur
+            raise_error(UNEXPECTED_RETURN_TYPE, bool_key_word);
         }
         if (!value->toBool()) m_stepManager.skipBlock(StepManager::Loop);
     }

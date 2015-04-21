@@ -3,7 +3,8 @@
 ProcessManager::ProcessManager()
     : m_stepManager(&m_memory),
     m_return(NULL),
-    m_throw(NULL) {
+    m_throw(NULL),
+    m_loopBack(false) {
     m_memory.setProcess(this);
 }
 

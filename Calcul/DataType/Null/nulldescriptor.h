@@ -1,20 +1,21 @@
-#ifndef VOIDDESCRIPTOR_H
-#define VOIDDESCRIPTOR_H
+#ifndef NULLDESCRIPTOR_H
+#define NULLDESCRIPTOR_H
 
 #include "Calcul/DataType/typedescriptor.h"
 #include "Calcul/DataType/iscvalue.h"
 #include "Syntax.h"
 
-class VoidDescriptor : public TypeDescriptor {
+class NullDescriptor : public TypeDescriptor {
 public:
-    VoidDescriptor();
+    NullDescriptor();
 
     void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
     static ISCObject* instance();
 
 private:
-    static ISCValuePtr m_none;
+    static ISCValuePtr m_null;
     static ISCObject* m_instance;
+    static NullDescriptor* m_singleton;
 };
 
-#endif // VOIDDESCRIPTOR_H
+#endif // NULLDESCRIPTOR_H

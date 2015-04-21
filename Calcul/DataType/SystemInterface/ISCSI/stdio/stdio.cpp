@@ -5,6 +5,8 @@
 #include "Calcul/DataType/Integer/integervalue.h"
 #include "Calcul/DataType/Boolean/booleanvalue.h"
 #include "Calcul/DataType/String/stringvalue.h"
+#include "Calcul/DataType/None/voidvalue.h"
+#include "Calcul/DataType/Null/nullvalue.h"
 #include "Calcul/DataType/Error/errorvalue.h"
 
 stdio::stdio() {
@@ -37,6 +39,12 @@ void stdio::execPrint(ISCObject* object) {
     }
     else if (StringValuePtr value = dynamic_pointer_cast<StringValue>(object->value())) {
         printf("%s", value->toString().c_str());
+    }
+    else if (dynamic_pointer_cast<VoidValue>(object->value())) {
+        printf("(none)");
+    }
+    else if (dynamic_pointer_cast<NullValue>(object->value())) {
+        printf("(null)");
     }
     else if (ErrorValuePtr value = dynamic_pointer_cast<ErrorValue>(object->value())) {
         CallDumpList& stackDump = value->stack();
