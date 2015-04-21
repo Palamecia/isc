@@ -3,8 +3,8 @@
 IntegerValue::IntegerValue(ISCObjectMapping *fcts, const int value) : BuiltinValue(fcts), m_value(value)
 {}
 
-bool IntegerValue::instanceOf(const TypeInfo& type) {
-    return type == int_type;
+TypeInfo IntegerValue::typeInfo() {
+    return int_type;
 }
 
 int &IntegerValue::toInt() {

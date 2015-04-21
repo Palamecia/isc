@@ -14,7 +14,7 @@ class ErrorValue : public BuiltinValue {
 public:
     ErrorValue(ISCObjectMapping *fcts, const String& value = "Runtime error");
 
-    virtual bool instanceOf(const TypeInfo& type);
+    virtual TypeInfo typeInfo();
 
     void setStack(CallDumpList &callStack);
 

@@ -3,8 +3,8 @@
 StringValue::StringValue(ISCObjectMapping *fcts, String value) : BuiltinValue(fcts), m_value(value)
 {}
 
-bool StringValue::instanceOf(const TypeInfo& type) {
-    return type == string_type;
+TypeInfo StringValue::typeInfo() {
+    return string_type;
 }
 
 ISCObject* StringValue::get(ISCObject* requester, const String& member) {

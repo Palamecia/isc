@@ -26,8 +26,10 @@ public:
     const ModifierList& modifiers() const;
     ModifierList& modifiers();
 
-    bool operator ==(const TypeInfo& other) const;
+    bool operator ==(const TypeInfo &other) const;
     bool operator ==(TypeId id) const;
+
+    bool extend(const TypeInfo &other);
 
 private:
     TypeDescriptor* m_descriptor;

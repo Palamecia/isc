@@ -6,8 +6,8 @@ ISCSI::ISCSI() :
     m_printEnabeled(false) {
 }
 
-bool ISCSI::instanceOf(const TypeInfo& type) {
-
+TypeInfo ISCSI::typeInfo() {
+    return var_type;
 }
 
 ISCObject *ISCSI::get(ISCObject *requester, const String& member) {

@@ -4,12 +4,8 @@
 VoidValue::VoidValue() : BuiltinValue(NULL)
 {}
 
-bool VoidValue::inheritFrom(const TypeInfo &) {
-    return true;
-}
-
-bool VoidValue::instanceOf(const TypeInfo &type) {
-    return type == void_type;
+TypeInfo VoidValue::typeInfo() {
+    return void_type;
 }
 
 ISCObject* VoidValue::get(ISCObject*, const String& member) {

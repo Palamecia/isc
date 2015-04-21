@@ -19,6 +19,14 @@ TypeDescriptor* ClassDescriptor::getType(const String& type) {
     return dynamic_cast<TypeDescriptor*>(it->second);
 }
 
+bool ClassDescriptor::extend(const TypeDescriptor &other) const {
+    ParentList::const_iterator it;
+    for (it = m_parents.begin(); it != m_parents.end(); ++it) {
+        if ((*it)->extend(other)) return true;
+    }
+    return TypeDescriptor::extend(other);
+}
+
 void ClassDescriptor::createInstance(ProcessManager* process, const ISCObjectList& args, byte accesMask, ISCObject* instance) {
     UserValue* value = new UserValue(this);
     for (MemberMap::iterator it =  m_members.begin(); it != m_members.end(); ++it) {
@@ -35,7 +43,7 @@ void ClassDescriptor::createInstance(ProcessManager* process, const ISCObjectLis
 }
 
 void ClassDescriptor::declareParent(TypeDescriptor * parent) {
-
+    m_parents.append(parent);
 }
 
 void ClassDescriptor::declareType(TypeDescriptor * type) {

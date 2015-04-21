@@ -3,12 +3,8 @@
 FunctionValue::FunctionValue()
 {}
 
-bool FunctionValue::instanceOf(const TypeInfo&) {
-    return false;
-}
-
-bool FunctionValue::inheritFrom(const TypeInfo& type) {
-    return type == var_type;
+TypeInfo FunctionValue::typeInfo() {
+    return var_type;
 }
 
 ISCObject* FunctionValue::get(ISCObject*, const String&) {

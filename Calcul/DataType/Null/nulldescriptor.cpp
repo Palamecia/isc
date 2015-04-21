@@ -10,6 +10,10 @@ NullDescriptor::NullDescriptor() : TypeDescriptor(null_key_word) {
     createInstance(NULL, ISCObjectList(), ISCObject::ExternAcces | ISCObject::ChildAcces, m_instance);
 }
 
+bool NullDescriptor::extend(const TypeDescriptor &other) const {
+    true;
+}
+
 void NullDescriptor::createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) {
     instance->init(m_null.get(), accesMask);
 }

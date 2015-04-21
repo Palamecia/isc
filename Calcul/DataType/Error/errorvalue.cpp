@@ -3,8 +3,8 @@
 ErrorValue::ErrorValue(ISCObjectMapping *fcts, const String& value) : BuiltinValue(fcts), m_value(value)
 {}
 
-bool ErrorValue::instanceOf(const TypeInfo& type) {
-    return type == error_type;
+TypeInfo ErrorValue::typeInfo() {
+    return error_type;
 }
 
 void ErrorValue::setStack(CallDumpList &callStack) {

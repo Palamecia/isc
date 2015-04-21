@@ -13,7 +13,8 @@ public:
     MemberDescriptor(const String& name);
     virtual void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance) = 0;
 
-    String name();
+    String& name();
+    const String& name() const;
 
 protected:
     String m_name;

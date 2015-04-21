@@ -4,12 +4,8 @@
 NullValue::NullValue() : BuiltinValue(NULL)
 {}
 
-bool NullValue::inheritFrom(const TypeInfo &) {
-    return true;
-}
-
-bool NullValue::instanceOf(const TypeInfo &) {
-    return false;
+TypeInfo NullValue::typeInfo() {
+    return void_type;
 }
 
 ISCObject* NullValue::get(ISCObject*, const String&) {

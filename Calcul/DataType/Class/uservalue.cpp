@@ -5,17 +5,8 @@ UserValue::UserValue(ClassDescriptor* typeId)
     : m_typeId(typeId)
 {}
 
-bool UserValue::instanceOf(const TypeInfo& type) {
-    return type.descriptor() == m_typeId && type.modifiers().isEmpty();
-}
-
-bool UserValue::inheritFrom(const TypeInfo& type) {
-    ISCObjectMapping::iterator it;
-    for (it = m_vtable.begin(); it != m_vtable.end(); ++it) {
-        if (it->second->instanceOf(type)) return true;
-        if (it->second->inheritFrom(type)) return true;
-    }
-    return ISCValue::inheritFrom(type);
+TypeInfo UserValue::typeInfo() {
+    return m_typeId;
 }
 
 ISCObject *UserValue::get(ISCObject *requester, const String& member) {

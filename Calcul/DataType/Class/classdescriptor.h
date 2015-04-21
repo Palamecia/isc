@@ -13,6 +13,7 @@ public:
     ~ClassDescriptor();
 
     TypeDescriptor* getType(const String& type);
+    virtual bool extend(const TypeDescriptor &other) const;
 
     void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
 
@@ -22,8 +23,10 @@ public:
 
 private:
     typedef Map<String, MemberDescriptor*> MemberMap;
+    typedef List<TypeDescriptor*> ParentList;
 
     Contexte m_staticContexte;
+    ParentList m_parents;
     MemberMap m_members;
 };
 

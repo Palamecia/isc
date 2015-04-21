@@ -7,7 +7,7 @@ class IntegerValue : public BuiltinValue {
 public:
     IntegerValue(ISCObjectMapping *fcts, const int value = 0);
 
-    virtual bool instanceOf(const TypeInfo& type);
+    virtual TypeInfo typeInfo();
 
     int &toInt();
 

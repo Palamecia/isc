@@ -21,6 +21,10 @@ public:
 
     virtual TypeDescriptor* getType(const String& type);
 
+    bool operator ==(TypeId id) const;
+
+    virtual bool extend(const TypeDescriptor &other) const;
+
     static Map<TypeId, TypeDescriptor*> BuiltIn;
 };
 

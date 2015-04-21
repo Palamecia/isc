@@ -3,8 +3,8 @@
 BooleanValue::BooleanValue(ISCObjectMapping *fcts, bool value) : BuiltinValue(fcts), m_value(value)
 {}
 
-bool BooleanValue::instanceOf(const TypeInfo& type) {
-    return type == bool_type;
+TypeInfo BooleanValue::typeInfo() {
+    return bool_type;
 }
 
 ISCObject* BooleanValue::get(ISCObject* requester, const String& member) {

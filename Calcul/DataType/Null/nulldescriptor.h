@@ -9,6 +9,7 @@ class NullDescriptor : public TypeDescriptor {
 public:
     NullDescriptor();
 
+    bool extend(const TypeDescriptor &other) const;
     void createInstance(ProcessManager* process, const List<ISCObject*>& args, byte accesMask, ISCObject* instance);
     static ISCObject* instance();
 

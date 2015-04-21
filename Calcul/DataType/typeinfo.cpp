@@ -66,5 +66,10 @@ bool TypeInfo::operator ==(const TypeInfo& other) const {
 }
 
 bool TypeInfo::operator ==(TypeId id) const {
-    return descriptor() == TypeDescriptor::BuiltIn[id];
+    return descriptor() == TypeDescriptor::BuiltIn[id] && modifiers().isEmpty();
+}
+
+bool TypeInfo::extend(const TypeInfo &other) {
+    if (modifiers() != other.modifiers()) return false;
+    return descriptor()->extend(*other.descriptor());
 }

@@ -12,7 +12,7 @@ public:
     virtual String nextInstruction();
     virtual void catchError(ISCObject *error);
 
-    virtual bool instanceOf(const TypeInfo& type);
+    virtual TypeInfo typeInfo();
     virtual ISCObject* get(ISCObject* requester, const String& member);
 
 protected:

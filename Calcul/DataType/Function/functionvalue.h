@@ -7,8 +7,7 @@ class FunctionValue : public ISCValue {
 public:
     FunctionValue();
 
-    bool instanceOf(const TypeInfo& type);
-    bool inheritFrom(const TypeInfo& type);
+    TypeInfo typeInfo();
     ISCObject* get(ISCObject* requester, const String& member);
     ISCObject* call(ISCObject* requester, ISCObject* self, const String& member, const ISCObjectList& args);
     virtual ISCObject* run(ISCObject *self, const ISCObjectList& args)=0;
