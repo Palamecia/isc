@@ -12,6 +12,7 @@ endforeach()
 
 set(${PROJECT_NAME}_HDR
     Boolean/booleandescriptor.h
+    Boolean/booleanoperator.h
     Boolean/booleanvalue.h
     Class/classdescriptor.h
     Class/uservalue.h
