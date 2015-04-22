@@ -71,7 +71,7 @@ void StepManager::dumpStack(CallDumpList &dump) {
     for (it = m_callStack.begin(); it != m_callStack.end(); ++it) {
         CallDump line;
         line.module = it->module->name();
-        line.line   = it->module->line(it->pos - 1);
+        line.line   = it->module->line(it->pos - 1) + 1;
         line.raw    = it->module->raw(it->pos - 1);
         dump.append(line);
     }

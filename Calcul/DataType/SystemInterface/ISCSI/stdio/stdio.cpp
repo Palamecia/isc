@@ -50,7 +50,7 @@ void stdio::execPrint(ISCObject* object) {
         CallDumpList& stackDump = value->stack();
         for (int i = 0; i < stackDump.size(); ++i) {
             CallDump& call = stackDump[i];
-            printf("%s:%d\n", call.module.c_str(), call.line+1);
+            printf("%s:%d\n", call.module.c_str(), call.line);
             printf("\t%s\n", call.raw.c_str());
         }
         printf("%s\n", value->toText().c_str());
