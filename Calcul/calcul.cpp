@@ -144,8 +144,8 @@ void Calcul::operatorResolution(MemoryManager *memory, const OperatorSet& operat
                 if (!rvalue) raise_error(UNKNOWN_TOKEN, tocken(pos+1).c_str());
                 result = lvalue->call(self, tocken(pos), ISCObjectList() << rvalue);
                 if (!result) raise_error(BINARY_INVALID_OPERANDS,
-                                         lvalue->value()->typeInfo().descriptor()->name().c_str(),
-                                         rvalue->value()->typeInfo().descriptor()->name().c_str(),
+                                         lvalue->value()->typeInfo().typeName().c_str(),
+                                         rvalue->value()->typeInfo().typeName().c_str(),
                                          tocken(pos).c_str());
                 memory->m_stack.push(result);
                 resolveBinary(pos, result->name());
@@ -157,7 +157,7 @@ void Calcul::operatorResolution(MemoryManager *memory, const OperatorSet& operat
                 if (!rvalue) raise_error(UNKNOWN_TOKEN, tocken(pos+1).c_str());
                 result = rvalue->call(self, tocken(pos), ISCObjectList());
                 if (!result) raise_error(UNARY_INVALID_OPERANDS,
-                                         rvalue->value()->typeInfo().descriptor()->name().c_str(),
+                                         rvalue->value()->typeInfo().typeName().c_str(),
                                          tocken(pos).c_str());
                 memory->m_stack.push(result);
                 resolveUnary(pos, result->name());

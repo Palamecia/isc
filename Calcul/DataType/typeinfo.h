@@ -32,6 +32,8 @@ public:
     bool extend(const TypeInfo &other);
 
 private:
+    String modifiersText() const;
+
     TypeDescriptor* m_descriptor;
     ModifierList m_modifiers;
 };

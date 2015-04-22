@@ -46,7 +46,7 @@ void TypeInfo::createInstance(ProcessManager* process, const List<ISCObject*>& a
 }
 
 String TypeInfo::typeName() const {
-    return m_descriptor->name();
+    return m_descriptor->name() + modifiersText();
 }
 
 const TypeDescriptor* TypeInfo::descriptor() const {
@@ -72,4 +72,24 @@ bool TypeInfo::operator ==(TypeId id) const {
 bool TypeInfo::extend(const TypeInfo &other) {
     if (modifiers() != other.modifiers()) return false;
     return descriptor()->extend(*other.descriptor());
+}
+
+String TypeInfo::modifiersText() const {
+    String text;
+    ModifierList::const_reverse_iterator it;
+    for (it = m_modifiers.rbegin(); it != m_modifiers.rend(); ++it) {
+        text += " ";
+        switch (*it) {
+        case list:
+            text += bracket_operator;
+            break;
+        case hash:
+            text += block_operator;
+            break;
+        case const_ref:
+            text += const_ref_operator;
+            break;
+        }
+    }
+    return text;
 }
